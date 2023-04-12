@@ -57,8 +57,9 @@ const loginUser = asyncHandler( async (req, res) => {
         username: user.username,
         email: user.email,
         id: user.id
-      }
-    })
+      },
+    }, process.env.ACCESS_TOKEN_SECRET
+    );
     res.status(200).json({accessToken})
   }
   res.json({message: "Login user"})
