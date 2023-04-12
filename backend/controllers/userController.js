@@ -51,7 +51,16 @@ const loginUser = asyncHandler( async (req, res) => {
   const user = await User.findOne({email})
 
   // Comparing password with hashedpassword
-  if(user && (await bcrypt.compare(password, user.password)))
+  if(user && (await bcrypt.compare(password, user.password))) {
+    const accessToken = jwt.sign({
+      user: {
+        username: user.username,
+        email: user.email,
+        id: user.id
+      }
+    })
+    res.status(200).json({accessToken})
+  }
   res.json({message: "Login user"})
 });
 
