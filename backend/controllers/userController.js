@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler")
 const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
 
 //@desc Register user
 //@route POST /api/users/register
@@ -17,8 +18,9 @@ const registerUser = asyncHandler( async (req, res) => {
     throw new Error("User registered already")
   }
 
-  
-
+  // Hash password
+  const hashPassword = await bcrypt.hash(password, 10)
+  console.log("Hashed Password:", hashPassword);
   res.json({message: "Register user"});
 });
 
